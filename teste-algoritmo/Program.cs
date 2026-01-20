@@ -1,4 +1,5 @@
-﻿static void Questao01()
+﻿using System.Linq;
+static void Questao01()
 {
     Console.Clear();
     decimal fretePadrao = 35m;
@@ -97,7 +98,73 @@ static void Questao02()
 
 static void Questao03()
 {
+    List<double> notaDosAlunosEstagio = new List<double>() { };
+    int quantidadeAlunos;
+    int notasExcelentes = 0;
+    int notasBoas = 0;
+    int notasRegulares = 0;
+    int notasFracas = 0;
+    EnumDesempenhoTurma desempenhoTurma;
 
+    System.Console.WriteLine("Qual a quantidade de alunos da turma de estagiários?");
+    while (!int.TryParse(Console.ReadLine(), out quantidadeAlunos) || quantidadeAlunos <= 0)
+        System.Console.WriteLine("Quantidade de alunos inválida.");
+
+    double maiorNota = double.MinValue;
+    double menorNota = double.MaxValue;
+
+    for (int i = 0; i < quantidadeAlunos; i++)
+    {
+        double nota;
+        System.Console.WriteLine($"Informe a nota do aluno {i + 1}");
+        while (!double.TryParse(Console.ReadLine(), out nota) || nota < 0 || nota > 10)
+            System.Console.WriteLine("Digite um número válido");
+
+        if (nota > maiorNota)
+            maiorNota = nota;
+        if (nota < menorNota)
+            menorNota = nota;
+
+        if (nota >= 8)
+            notasExcelentes++;
+        else if (nota >= 6)
+            notasBoas++;
+        else if (nota >= 5)
+            notasRegulares++;
+        else
+            notasFracas++;
+
+        notaDosAlunosEstagio.Add(nota);
+    }
+
+    double mediaNotaAlunos = notaDosAlunosEstagio.Sum() / notaDosAlunosEstagio.Count;
+
+    if (mediaNotaAlunos >= 8)
+        desempenhoTurma = EnumDesempenhoTurma.EXCELENTE;
+    else if (mediaNotaAlunos >= 6)
+        desempenhoTurma = EnumDesempenhoTurma.BOA;
+    else if (mediaNotaAlunos >= 5)
+        desempenhoTurma = EnumDesempenhoTurma.REGULAR;
+    else
+        desempenhoTurma = EnumDesempenhoTurma.FRACA;
+
+    System.Console.WriteLine("=== RELATÓRIO DA TURMA ===");
+    for (int i = 0; i < quantidadeAlunos; i++)
+        System.Console.WriteLine($"Nota {i + 1}: {notaDosAlunosEstagio[i]}");
+
+    System.Console.WriteLine();
+    System.Console.WriteLine($"Média: {mediaNotaAlunos}");
+    System.Console.WriteLine($"Maior: {maiorNota}");
+    System.Console.WriteLine($"Menor: {menorNota}");
+    System.Console.WriteLine($"Aprovados: {notasExcelentes}");
+    System.Console.WriteLine($"Reprovados: {notasFracas}");
+    System.Console.WriteLine($"Desempenho da turma: {desempenhoTurma}");
 }
 
-
+enum EnumDesempenhoTurma
+{
+    EXCELENTE,
+    BOA,
+    REGULAR,
+    FRACA
+}
