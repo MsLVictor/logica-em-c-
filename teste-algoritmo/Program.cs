@@ -1,5 +1,4 @@
-﻿using System.Linq;
-static void Questao01()
+﻿static void Questao01()
 {
     Console.Clear();
     decimal fretePadrao = 35m;
@@ -56,25 +55,25 @@ static void Questao02()
     string nomeAluno;
     string statusAluno;
 
-    System.Console.WriteLine("Nome do aluno: ");
+    Console.WriteLine("Nome do aluno: ");
     while (string.IsNullOrWhiteSpace(nomeAluno = Console.ReadLine()))
         Console.WriteLine("Nome inválido.");
 
-    System.Console.WriteLine("Qual a porcentagem de frequência do aluno?");
+    Console.WriteLine("Qual a porcentagem de frequência do aluno?");
     while (!double.TryParse(Console.ReadLine(), out frequencia) || frequencia > 100 || frequencia < 0)
-        System.Console.WriteLine("ERRO. Digite uma entrada válida(Número positivo)");
+        Console.WriteLine("ERRO. Digite uma entrada válida(Número positivo)");
 
-    System.Console.WriteLine("Digite a primeira nota.");
+    Console.WriteLine("Digite a primeira nota.");
     while (!double.TryParse(Console.ReadLine(), out nota1) || nota1 < 0 || nota1 > 10)
-        System.Console.WriteLine("ERRO. Digite uma entrada válida(Número positivo)");
+        Console.WriteLine("ERRO. Digite uma entrada válida(Número positivo)");
 
-    System.Console.WriteLine("Digite a segunda nota.");
+    Console.WriteLine("Digite a segunda nota.");
     while (!double.TryParse(Console.ReadLine(), out nota2) || nota2 < 0 || nota2 > 10)
-        System.Console.WriteLine("ERRO. Digite uma entrada válida(Número positivo)");
+        Console.WriteLine("ERRO. Digite uma entrada válida(Número positivo)");
 
-    System.Console.WriteLine("Digite a terceira nota.");
+    Console.WriteLine("Digite a terceira nota.");
     while (!double.TryParse(Console.ReadLine(), out nota3) || nota3 < 0 || nota3 > 10)
-        System.Console.WriteLine("ERRO. Digite uma entrada válida(Número positivo)");
+        Console.WriteLine("ERRO. Digite uma entrada válida(Número positivo)");
 
     double mediaPonderada = ((nota1 * 1) + (nota2 * 5) + (nota3 * 4)) / 10;
 
@@ -87,13 +86,13 @@ static void Questao02()
     else
         statusAluno = "Reprovado";
 
-    System.Console.WriteLine("=== BOLETIM FINAL ===");
-    System.Console.WriteLine($"Aluno: {nomeAluno}");
-    System.Console.WriteLine($"Notas: {nota1}, {nota2}, {nota3}");
-    System.Console.WriteLine($"Média: {mediaPonderada}");
-    System.Console.WriteLine($"Frequência: {(frequencia / 100):P2}");
-    System.Console.WriteLine();
-    System.Console.WriteLine($"Situação: {statusAluno}");
+    Console.WriteLine("=== BOLETIM FINAL ===");
+    Console.WriteLine($"Aluno: {nomeAluno}");
+    Console.WriteLine($"Notas: {nota1}, {nota2}, {nota3}");
+    Console.WriteLine($"Média: {mediaPonderada}");
+    Console.WriteLine($"Frequência: {(frequencia / 100):P2}");
+    Console.WriteLine();
+    Console.WriteLine($"Situação: {statusAluno}");
 }
 
 static void Questao03()
@@ -106,9 +105,9 @@ static void Questao03()
     int notasFracas = 0;
     EnumDesempenhoTurma desempenhoTurma;
 
-    System.Console.WriteLine("Qual a quantidade de alunos da turma de estagiários?");
+    Console.WriteLine("Qual a quantidade de alunos da turma de estagiários?");
     while (!int.TryParse(Console.ReadLine(), out quantidadeAlunos) || quantidadeAlunos <= 0)
-        System.Console.WriteLine("Quantidade de alunos inválida.");
+        Console.WriteLine("Quantidade de alunos inválida.");
 
     double maiorNota = double.MinValue;
     double menorNota = double.MaxValue;
@@ -116,9 +115,9 @@ static void Questao03()
     for (int i = 0; i < quantidadeAlunos; i++)
     {
         double nota;
-        System.Console.WriteLine($"Informe a nota do aluno {i + 1}");
+        Console.WriteLine($"Informe a nota do aluno {i + 1}");
         while (!double.TryParse(Console.ReadLine(), out nota) || nota < 0 || nota > 10)
-            System.Console.WriteLine("Digite um número válido");
+            Console.WriteLine("Digite um número válido");
 
         if (nota > maiorNota)
             maiorNota = nota;
@@ -148,17 +147,154 @@ static void Questao03()
     else
         desempenhoTurma = EnumDesempenhoTurma.FRACA;
 
-    System.Console.WriteLine("=== RELATÓRIO DA TURMA ===");
+    Console.WriteLine("=== RELATÓRIO DA TURMA ===");
     for (int i = 0; i < quantidadeAlunos; i++)
-        System.Console.WriteLine($"Nota {i + 1}: {notaDosAlunosEstagio[i]}");
+        Console.WriteLine($"Nota {i + 1}: {notaDosAlunosEstagio[i]}");
 
-    System.Console.WriteLine();
-    System.Console.WriteLine($"Média: {mediaNotaAlunos}");
-    System.Console.WriteLine($"Maior: {maiorNota}");
-    System.Console.WriteLine($"Menor: {menorNota}");
-    System.Console.WriteLine($"Aprovados: {notasExcelentes}");
-    System.Console.WriteLine($"Reprovados: {notasFracas}");
-    System.Console.WriteLine($"Desempenho da turma: {desempenhoTurma}");
+    Console.WriteLine();
+    Console.WriteLine($"Média: {mediaNotaAlunos}");
+    Console.WriteLine($"Maior: {maiorNota}");
+    Console.WriteLine($"Menor: {menorNota}");
+    Console.WriteLine($"Aprovados: {notasExcelentes}");
+    Console.WriteLine($"Reprovados: {notasFracas}");
+    Console.WriteLine($"Desempenho da turma: {desempenhoTurma}");
+}
+
+
+static void Questao04()
+{
+    Console.Clear();
+    Dictionary<string, int> produtosEstoque = new() { { "Mouse", 10 }, { "Teclado", 6 }, { "Monitor", 4 }, { "Cabo HDMI", 18 }, { "Cadeira", 5 } };
+    int produtosMenorQueOito = 0;
+
+    Console.WriteLine("=== ESTOQUE INICIAL ===");
+    foreach (var produto in produtosEstoque)
+        Console.WriteLine($"{produto.Key} - {produto.Value} unidades");
+
+
+    Console.WriteLine();
+    Console.WriteLine("=== OPERAÇÕES ===");
+    produtosEstoque.Add("SSD", 7);
+    Console.WriteLine($"Adicionado: SSD ({produtosEstoque["SSD"]})");
+
+    produtosEstoque["Teclado"] = 12;
+    Console.WriteLine($"Adicionado: Teclado ({produtosEstoque["Teclado"]})");
+
+    bool existeProdutoNoEstoque = produtosEstoque.ContainsKey("Webcam");
+    Console.WriteLine($"Existe Webcam? {(existeProdutoNoEstoque ? "Sim" : "Não")}");
+
+
+    produtosEstoque.Remove("Monitor");
+    Console.WriteLine("Removido: Monitor");
+
+    Console.WriteLine();
+    Console.WriteLine($"== ITENS COM MENOS DE 8 NO ESTOQUE ===");
+    foreach (var produto in produtosEstoque)
+    {
+        if (produto.Value < 8)
+        {
+            Console.WriteLine($"Produto: {produto.Key}");
+            produtosMenorQueOito++;
+        }
+    }
+    Console.WriteLine($"Estoque baixo ( menor que 8): {produtosMenorQueOito}\n");
+
+    Console.WriteLine("=== ESTOQUE FINAL ===");
+    foreach (var produto in produtosEstoque)
+        Console.WriteLine($"{produto.Key} - {produto.Value} unidades");
+}
+
+Questao05();
+static void Questao05()
+{
+    Console.Clear();
+    string tipoPagamento;
+    int descontoAdicional;
+    int quantidadeDeParcela;
+    decimal desconto = 0;
+    decimal valorCompra;
+    decimal taxaAdicional = 0;
+    bool temDesconto;
+    
+    Console.WriteLine("Informe o nome do cliente.");
+    string nomeCliente = Console.ReadLine();
+
+    Console.WriteLine("Qual o valor da compra?");
+    while (!decimal.TryParse(Console.ReadLine(), out valorCompra) || valorCompra < 1)
+        Console.WriteLine("Digite um valor válido.");
+
+    Console.WriteLine("Informe a forma de pagamento (DINHEIRO, PIX, DÉBITO OU CRÉDITO)");
+    while (true)
+    {
+        tipoPagamento = Console.ReadLine();
+        if (tipoPagamento != "DINHEIRO" && tipoPagamento != "PIX" && tipoPagamento != "DÉBITO" && tipoPagamento != "CRÉDITO")
+            Console.WriteLine("Digite uma forma de pagamento válida.");
+        else
+            break;
+    }
+
+    if (tipoPagamento == "DINHEIRO")
+        desconto += 5;
+    else if (tipoPagamento == "PIX")
+        desconto += 3;
+    else if (tipoPagamento == "DÉBITO")
+        desconto += 0;
+    else
+        taxaAdicional = 5;
+
+    valorCompra += valorCompra * (taxaAdicional / 100m);
+    bool possuiCupomConvertido;
+    bool exit = true;
+
+    Console.WriteLine("Possui cupom? s/n");
+    while (exit)
+    {
+        var possuiCupom = Console.ReadLine().ToLower();
+        switch (possuiCupom)
+        {
+            case "s":
+                possuiCupomConvertido = true;
+                desconto += 10;
+                exit = false;
+                break;
+
+            case "n":
+                possuiCupomConvertido = false;
+                exit = false;
+                break;
+            default:
+                Console.WriteLine("Digite s ou n");
+                break;
+        }
+    }
+
+    
+    
+    decimal valorCompraComDesconto = valorCompra * (desconto / 100m);    
+    decimal valorFinal = valorCompra - valorCompraComDesconto;
+    Console.WriteLine("=== COMPRA ONLINE ===");
+    Console.WriteLine($"Cliente: {nomeCliente}\n");
+
+    Console.WriteLine("CÁLCULO");
+    Console.WriteLine($"Valor original: {valorCompra}");
+    System.Console.WriteLine($"Cupom: {valorCompraComDesconto:C}");
+    System.Console.WriteLine($"Valor final: {valorFinal:C}");
+    System.Console.WriteLine($"Forma de pagamento: {tipoPagamento}");
+
+    if(tipoPagamento == "CRÉDITO")
+    {
+        Console.WriteLine("Digite a quantidade de parcelas:");
+        while(!int.TryParse(Console.ReadLine(), out quantidadeDeParcela) || quantidadeDeParcela < 1)
+            Console.WriteLine("Digite uma quantidade válida.");
+        
+        if(quantidadeDeParcela > 0)
+        {
+            System.Console.WriteLine("Tipo: Parcelado.");
+            Console.WriteLine($"Quantidade parcela: {quantidadeDeParcela} x {valorCompra/quantidadeDeParcela:C}");
+        }
+        else
+            Console.WriteLine($"Tipo: À vista.");
+    }
 }
 
 enum EnumDesempenhoTurma
