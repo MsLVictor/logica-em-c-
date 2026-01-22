@@ -1,4 +1,6 @@
-﻿static void Questao01()
+﻿using System.ComponentModel.DataAnnotations;
+
+static void Questao01()
 {
     Console.Clear();
     decimal fretePadrao = 35m;
@@ -204,7 +206,6 @@ static void Questao04()
         Console.WriteLine($"{produto.Key} - {produto.Value} unidades");
 }
 
-Questao05();
 static void Questao05()
 {
     Console.Clear();
@@ -268,8 +269,6 @@ static void Questao05()
         }
     }
 
-    
-    
     decimal valorCompraComDesconto = valorCompra * (desconto / 100m);    
     decimal valorFinal = valorCompra - valorCompraComDesconto;
     Console.WriteLine("=== COMPRA ONLINE ===");
@@ -297,10 +296,175 @@ static void Questao05()
     }
 }
 
+static void questao02Prova02()
+{
+    decimal rendaMensal;
+    decimal scoreCliente;
+    int tempoDeEmpresaMeses;
+    bool emprestimoAprovado;
+    decimal valorEmprestimo = 0m;
+
+    System.Console.WriteLine("Digite seu nome completo:");
+    string nomeCliente = Console.ReadLine();
+
+    System.Console.WriteLine("Digite sua renda mensal:");
+    while(!decimal.TryParse(Console.ReadLine(), out rendaMensal) || rendaMensal < 1)
+        System.Console.WriteLine("Digite um número válido.");
+
+    System.Console.WriteLine("Digite seu score de crédito:");
+    while(!decimal.TryParse(Console.ReadLine(), out scoreCliente) || scoreCliente < 1)
+        System.Console.WriteLine("Digite um número válido.");
+
+    System.Console.WriteLine("Quantos meses você está no emprego atual?");
+    while(!int.TryParse(Console.ReadLine(), out tempoDeEmpresaMeses) || tempoDeEmpresaMeses < 1)
+        System.Console.WriteLine("Digite um número válido.");
+    
+    if(rendaMensal >= 4000 || (rendaMensal >= 2800 && tempoDeEmpresaMeses >= 6))
+    {
+        emprestimoAprovado = true;
+        valorEmprestimo = rendaMensal * 0.40m;
+    }else if (rendaMensal >= 2000 && scoreCliente >= 650 && tempoDeEmpresaMeses > 10)
+    {
+        emprestimoAprovado = true;
+        valorEmprestimo = rendaMensal * 0.25m;
+    } else
+        emprestimoAprovado = false;
+    
+    System.Console.WriteLine("=== ANÁLISE DE CRÉDITO ===");
+    System.Console.WriteLine($"Cliente: {nomeCliente}");
+    System.Console.WriteLine($"Renda Mensal: {rendaMensal:C}");
+    System.Console.WriteLine($"Score: {scoreCliente}");
+    System.Console.WriteLine($"Tempo de Emprega: {tempoDeEmpresaMeses} meses");
+    System.Console.WriteLine($"Status {(emprestimoAprovado ? "Aprovado" : "Reprovado")}");
+    System.Console.WriteLine($"Limite de Crédito: {valorEmprestimo:C}");
+}
+
+static void Questao03Prova02()
+{
+    List<decimal> listaDeVendas = new List<decimal>(){};
+    int quantidadeDeVendas;
+    int contadorVendasPremium = 0;
+    decimal maiorVenda = decimal.MinValue;
+    decimal menorVenda = decimal.MaxValue;
+    string classificacaoVendas;
+    
+
+    System.Console.WriteLine("Quantas vendas foram realizadas?");
+    while(!int.TryParse(Console.ReadLine(), out quantidadeDeVendas) || quantidadeDeVendas < 1)
+        System.Console.WriteLine("Digite uma quantidade válida.");
+    
+    for(int i = 1; i <= quantidadeDeVendas; i++)
+    {
+        decimal valorVenda;
+        System.Console.WriteLine($"Digite o valor da venda {i}:");
+        while(!decimal.TryParse(Console.ReadLine(), out valorVenda) || valorVenda < 1)
+            System.Console.WriteLine("Digite um valor válido.");
+        
+        if(valorVenda > 30)
+            contadorVendasPremium++;
+        
+        if(valorVenda > maiorVenda)
+            maiorVenda = valorVenda;
+        
+        if(valorVenda < menorVenda)
+            menorVenda = valorVenda;
+
+        listaDeVendas.Add(valorVenda);
+    }
+    
+    decimal mediaDeVendas = listaDeVendas.Average();
+    if(listaDeVendas.Sum() >= 200)
+        classificacaoVendas = "Ótimo";
+    else if(listaDeVendas.Sum() >= 120)
+        classificacaoVendas = "Bom";
+    else if(listaDeVendas.Sum() >= 60)
+        classificacaoVendas = "Regular";
+    else
+        classificacaoVendas = "Fraco";
+
+    System.Console.WriteLine("=== RELATÓRIO DO DIA ===");
+    System.Console.WriteLine($"Faturamento total: {listaDeVendas.Sum():C}");
+    System.Console.WriteLine($"Quantidade pedidos maior que R$ 30: {contadorVendasPremium}");
+    System.Console.WriteLine($"Maior venda: {maiorVenda:C}");
+    System.Console.WriteLine($"Menor venda: {menorVenda:C}");
+    System.Console.WriteLine($"Status do dia: {classificacaoVendas}");
+}
+
+static void Questao04Prova02()
+{
+    List<string> listaRotina = new List<string>(){"Estudar lógica", "Fazer Exercícios", "Revisar conteúdo", "Enviar atividade"};
+    
+    listaRotina.ForEach(lista => System.Console.WriteLine(lista));
+    System.Console.WriteLine("--------------------------------------\n");
+    listaRotina.Add("Ler apostila");
+    listaRotina.Insert(2, "Assistir Aula");
+    bool temNaLista = listaRotina.Contains("Almoçar");
+    if(temNaLista == false)
+        listaRotina.Add("Almoçar");
+    
+    listaRotina.Remove("Revisar conteúdo");
+
+    listaRotina.ForEach(lista => System.Console.WriteLine(lista));
+}
+
+Questao05Prova02();
+static void Questao05Prova02()
+{
+    decimal salarioBruto;
+    double horasExtras;
+    decimal valorHorasExtras;
+    bool valeTransporteConvertido;
+
+    System.Console.WriteLine("Digite o nome do funcionário:");
+    string nomeFucionario = Console.ReadLine();
+
+    System.Console.WriteLine("Digite o Salário Bruto:");
+    while(!decimal.TryParse(Console.ReadLine(), out salarioBruto) || salarioBruto < 1)
+        System.Console.WriteLine("Digite uma entrada válida.");
+    
+    System.Console.WriteLine("Digite as horas extras:");
+    while(!double.TryParse(Console.ReadLine(), out horasExtras) || horasExtras < 0)
+        System.Console.WriteLine("Digite uma entrada válida");
+
+    System.Console.WriteLine("Digite o valor por hora extras:");
+    while(!decimal.TryParse(Console.ReadLine(), out valorHorasExtras) || valorHorasExtras < 1)
+        System.Console.WriteLine("Digite uma entrada válida");
+
+
+    System.Console.WriteLine("Recebe vale-transporte? (digite 'sim' ou 'não')");
+    while(true)
+    {
+        string valeTransporte = Console.ReadLine().ToLower();
+        if(valeTransporte == "sim")
+        {
+            valeTransporteConvertido = true;
+            salarioBruto -= salarioBruto * 0.06m;
+            break;
+        }
+        else if (valeTransporte == "não")
+        {
+            valeTransporteConvertido = false;
+            break;
+        }
+        else
+            System.Console.WriteLine("Digite sim ou não");
+        
+    }
+    
+    decimal calculoHoraExtra = (decimal)horasExtras * valorHorasExtras;
+    decimal salarioBrutoComHoraExtra = salarioBruto + calculoHoraExtra;
+    decimal salarioBrutoComDescontoInss = salarioBrutoComHoraExtra - (salarioBrutoComHoraExtra * 0.08m);
+
+    System.Console.WriteLine("=== FOLHA DE PAGAMENTO ===");
+    System.Console.WriteLine($"Bruto Total: {salarioBrutoComHoraExtra:C}");
+    System.Console.WriteLine($"Horas Extras: {calculoHoraExtra:C}");
+    System.Console.WriteLine($"Vale-Trasporte: {(valeTransporteConvertido ? "Sim" : "Não")}");
+    System.Console.WriteLine($"INSS: {salarioBrutoComHoraExtra * 0.08m}");
+}
 enum EnumDesempenhoTurma
 {
     EXCELENTE,
     BOA,
     REGULAR,
-    FRACA
+    FRACA,
 }
